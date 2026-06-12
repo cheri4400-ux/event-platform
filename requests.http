@@ -1,0 +1,13 @@
+POST http://localhost:8080/events
+Content-Type: application/json
+
+{
+  "user_id": "333",
+  "event_type": "purchase",
+  "page": "checkout",
+  "amount": 100
+}
+
+
+### Получить события
+GET http://localhost:8080/events

@@ -1,0 +1,12 @@
+.env
+
+.idea/
+
+event-platform.exe
+*.exe
+
+vendor/
+
+coverage.out
+
+swagger_test.go
