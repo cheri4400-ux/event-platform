@@ -25,21 +25,6 @@ Swagger
 GitHub Actions
 slog)
 
-Структура проекта
-cmd/
-├── api/
-└── processor/
-
-internal/
-├── config/
-├── handler/
-├── kafka/
-├── migrations/
-├── models/
-├── postgres/
-├── repository/
-└── service/
-
 docs/
 Запуск проекта
 Запуск инфраструктуры
@@ -64,6 +49,7 @@ POST /events
 "page": "checkout",
 "amount": 100
 }
+
 Получение событий
 
 GET /events
@@ -71,6 +57,3 @@ GET /events
 Тестирование
 go test ./...
 
-кто сделал?
-
-Андрей
