@@ -12,28 +12,19 @@ Swagger документация
 Unit-тесты
 Graceful Shutdown
 Docker Compose для локального запуска
+
 Архитектура
-Client
-|
-v
-REST API
-|
-v
-Kafka Topic (events)
-|
-v
-Processor
-|
-v
-PostgreSQL
+Client -> REST API -> Kafka Topic (events) -> Processor -> PostgreSQL 
+
 Стек технологий
-Go 1.26
+(Go 
 PostgreSQL
 Apache Kafka
 Docker Compose
 Swagger
 GitHub Actions
-slog
+slog)
+
 Структура проекта
 cmd/
 ├── api/
