@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"event-platform/internal/config"
+	"event-platform/internal/metrics"
 	"event-platform/internal/migrations"
 	"event-platform/internal/models"
 	"event-platform/internal/postgres"
@@ -13,6 +14,9 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"net/http"
 
 	"github.com/joho/godotenv"
 
@@ -39,6 +43,25 @@ func main() {
 	slog.SetDefault(logger)
 
 	cfg := config.Load()
+
+	metrics.Init()
+
+	go func() {
+		http.Handle("/metrics", promhttp.Handler())
+
+		slog.Info(
+			"metrics server started",
+			"port", 2112,
+		)
+
+		err := http.ListenAndServe(":2112", nil)
+		if err != nil {
+			slog.Error(
+				"metrics server failed",
+				"error", err,
+			)
+		}
+	}()
 
 	slog.Info(
 		"config loaded",

@@ -22,6 +22,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
@@ -67,6 +69,11 @@ func main() {
 	mux.Handle(
 		"/swagger/",
 		httpSwagger.WrapHandler,
+	)
+
+	mux.Handle(
+		"/metrics",
+		promhttp.Handler(),
 	)
 
 	// 3. Health check endpoint

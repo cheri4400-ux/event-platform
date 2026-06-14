@@ -1,6 +1,7 @@
 package service
 
 import (
+	"event-platform/internal/metrics"
 	"event-platform/internal/models"
 	"log/slog"
 )
@@ -23,8 +24,11 @@ func (s *EventService) Process(event models.Event) error {
 
 	err := s.repo.Save(event)
 	if err != nil {
+		metrics.EventsFailed.Inc()
 		return err
 	}
+
+	metrics.EventsProcessed.Inc()
 
 	slog.Info("event processed successfully")
 

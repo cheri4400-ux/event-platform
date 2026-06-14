@@ -1,85 +1,89 @@
-Event Tracking Platform
+# Event Tracking Platform
 
-Сервис для сбора, обработки и хранения пользовательских событий.
+Сервис для сбора и обработки пользовательских событий.
 
-Возможности
-Прием событий через REST API
-Отправка событий в Kafka
-Асинхронная обработка событий через Consumer
-Сохранение событий в PostgreSQL
-Валидация входящих данных
-Swagger документация
-Unit-тесты
-Graceful Shutdown
-Docker Compose для локального запуска
-Архитектура
+## Стек
+
+* Go
+* PostgreSQL
+* Kafka
+* Docker
+* Prometheus
+* Grafana
+* Swagger
+
+## Архитектура
+
 Client
-|
-v
+↓
 REST API
-|
-v
-Kafka Topic (events)
-|
-v
-Processor
-|
-v
+↓
+Kafka Producer
+↓
+Kafka
+↓
+Processor Consumer
+↓
 PostgreSQL
-Стек технологий
-Go 1.26
-PostgreSQL
-Apache Kafka
-Docker Compose
-Swagger
-GitHub Actions
-slog
-Структура проекта
-cmd/
-├── api/
-└── processor/
 
-internal/
-├── config/
-├── handler/
-├── kafka/
-├── migrations/
-├── models/
-├── postgres/
-├── repository/
-└── service/
+Prometheus ← Processor
+↓
+Grafana
 
-docs/
-Запуск проекта
-Запуск инфраструктуры
+API принимает события от клиентов и публикует их в Kafka.
+
+Processor читает сообщения из Kafka и сохраняет их в PostgreSQL.
+
+Prometheus собирает метрики приложения.
+
+Grafana визуализирует метрики.
+
+## Запуск
+
+```bash
 docker compose up -d
-Запуск API
-go run cmd/api/main.go
-Запуск Processor
-go run cmd/processor/main.go
-Swagger
+```
 
-После запуска API:
+Запуск API:
+
+```bash
+go run cmd/api/main.go
+```
+
+Запуск Processor:
+
+```bash
+go run cmd/processor/main.go
+```
+
+## Swagger
 
 http://localhost:8080/swagger/index.html
 
-Пример создания события
+![img.png](img.png)
 
-POST /events
+## Метрики
 
-{
-"user_id": "123",
-"event_type": "purchase",
-"page": "checkout",
-"amount": 100
-}
-Получение событий
+http://localhost:2112/metrics
 
-GET /events
+![img_1.png](img_1.png)
 
-Тестирование
-go test ./...
+## Grafana
 
-кто сделал?
+http://localhost:3000
 
-Андрей
+![img_2.png](img_2.png)
+
+## Основные возможности
+
+* Создание событий через REST API
+* Асинхронная обработка через Kafka
+* Сохранение событий в PostgreSQL
+* Мониторинг через Prometheus
+* Дашборды Grafana
+* Swagger документация
+* Graceful Shutdown
+* Unit Tests
+
+```
+```

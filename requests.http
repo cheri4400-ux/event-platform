@@ -2,7 +2,7 @@ POST http://localhost:8080/events
 Content-Type: application/json
 
 {
-  "user_id": "333",
+  "user_id": "123",
   "event_type": "purchase",
   "page": "checkout",
   "amount": 100
